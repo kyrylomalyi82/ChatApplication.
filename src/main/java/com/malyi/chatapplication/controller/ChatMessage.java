@@ -12,5 +12,6 @@ public class ChatMessage {
     private String message;
     private String sender;
     private MessageType type;
+    private Group group;
 
 }

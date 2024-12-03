@@ -33,15 +33,20 @@
         <div class="connecting">
             Łączenie...
         </div>
-        <ul id="messageArea">
-
-        </ul>
+        <ul id="messageArea"></ul>
         <form id="messageForm" name="messageForm">
             <div class="form-group">
-                <div class="input-group clearfix">
-                    <input type="text" id="message" placeholder="Wpisz wiadomość..." autocomplete="off" class="form-control"/>
-                    <button type="submit" class="primary">Wyślij</button>
-                </div>
+                <select id="group-select" class="form-control">
+                    <option value="public">Public</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" id="message" placeholder="Wpisz wiadomość..." autocomplete="off" class="form-control"/>
+            </div>
+            <div class="form-group button-group">
+                <button type="submit" class="primary">Wyślij</button>
             </div>
         </form>
     </div>
