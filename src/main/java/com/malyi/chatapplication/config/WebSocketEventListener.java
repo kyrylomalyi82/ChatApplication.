@@ -12,24 +12,24 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
-@Slf4j // for logging
 public class WebSocketEventListener {
 
-    private final SimpMessageSendingOperations messageTemplate;
+    private final SimpMessageSendingOperations messagingTemplate;
 
     @EventListener
-    public void handleWebSocketDisconnectListener(SessionDisconnectEvent sessionDisconnectEvent) {
-        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(sessionDisconnectEvent.getMessage());
-        String username = (String) headerAccessor.getSessionAttributes().get("username").toString();
+    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
+        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+        String username = (String) headerAccessor.getSessionAttributes().get("username");
         if (username != null) {
-            log.info("Disconnected from username {}", username);
+            log.info("user disconnected: {}", username);
             var chatMessage = ChatMessage.builder()
-                    .messageType(MessageType.LEAVE)
+                    .type(MessageType.LEAVE)
                     .sender(username)
                     .build();
-            messageTemplate.convertAndSend("/topic/public", chatMessage);
-
+            messagingTemplate.convertAndSend("/topic/public", chatMessage);
         }
     }
+
 }
